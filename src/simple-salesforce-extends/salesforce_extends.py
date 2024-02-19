@@ -1,12 +1,10 @@
 import json
 import logging
 
-import boto3
 from simple_salesforce import Salesforce
 from simple_salesforce.exceptions import SalesforceExpiredSession
 
 logger = logging.getLogger(__name__)
-secrets_client = boto3.client("secretsmanager")
 
 
 class SalesforceClientCredential(Salesforce):
@@ -25,14 +23,25 @@ class SalesforceClientCredential(Salesforce):
         }
     """
 
-    def __init__(self, *args, credentials_secrets_manager_arn=None, **kwargs):
+    def __init__(
+        self, *args, secrets_client=None, credentials_secrets_manager_arn=None, **kwargs
+    ):
         """
-        Args: credentials_secrets_manager_arn is requires
+        Args:
+            secrets_client: instance of botocore.client.SecretsManager(require)
+                Usually it is generated writing like `boto3.client("secretsmanager")`
+            credentials_secrets_manager_arn: str(require)
+                ARN of Secrets Manager Secret which contains Salesforce credentials
         """
+        if secrets_client is None or type(secrets_client).__name__ != "SecretsManager":
+            raise RuntimeError("secrets_client is not the SecretsManager client.")
+
+        if not credentials_secrets_manager_arn:
+            raise RuntimeError("credentials_secrets_manager_arn is required.")
+
+        self.secrets_client = secrets_client
         self.credentials_secrets_manager_arn = credentials_secrets_manager_arn
         logger.debug(f"Secrets Manager Arn: {self.credentials_secrets_manager_arn=}")
-        if not self.credentials_secrets_manager_arn:
-            raise RuntimeError("credentials_secrets_manager_arn is required.")
 
         self.load_credentials()
 
@@ -86,7 +95,7 @@ class SalesforceClientCredential(Salesforce):
             }
         """
         logger.info("Loading Credentials")
-        secret_value = secrets_client.get_secret_value(
+        secret_value = self.secrets_client.get_secret_value(
             SecretId=self.credentials_secrets_manager_arn
         )
         self.credentials = json.loads(secret_value["SecretString"])
@@ -98,7 +107,7 @@ class SalesforceClientCredential(Salesforce):
         save credentials to Secrets Manager
         """
         logger.info("Saving Credentials")
-        secrets_client.put_secret_value(
+        self.secrets_client.put_secret_value(
             SecretId=self.credentials_secrets_manager_arn,
             SecretString=json.dumps(self.credentials),
         )
