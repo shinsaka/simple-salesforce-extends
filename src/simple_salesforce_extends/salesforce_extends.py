@@ -11,7 +11,7 @@ class SalesforceClientCredential(Salesforce):
     """
     About:
         Extends for simple_salesforce.Salesforce with Load/Save Salesforce credentials from/to Secrets Manager.
-        This class is used for Salesforce Client Login Flow.
+        This class is used for Salesforce Client Credentials Flow.
     see: https://help.salesforce.com/s/articleView?id=sf.remoteaccess_oauth_client_credentials_flow.htm&type=5
 
     prepare:
