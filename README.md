@@ -1,7 +1,7 @@
 # simple-salesforce-extends
 
 [![PyPI version](https://badge.fury.io/py/simple-salesforce-extends.svg)](https://badge.fury.io/py/simple-salesforce-extends)
-[![Python package](
+[![badge](https://pepy.tech/badge/simple-salesforce-extends)](https://pepy.tech/projects/simple-salesforce-extends)
 
 ## About
 
