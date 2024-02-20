@@ -5,9 +5,9 @@
 
 ## About
 
-This package extends the simple-salesforce package to support the use of AWS Secrets Manager to store the Salesforce credentials.
-API request with the stored token if hold the token.
-If the token is expired, re-authenticate and store the new token.
+This package extends the simple-salesforce package to support the use of AWS Secrets Manager to store the Salesforce credentials.  
+API request with the stored token if hold the token.  
+If the token is expired, re-authenticate and store the new token.  
 
 ## Required
 
