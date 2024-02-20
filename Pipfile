@@ -8,9 +8,8 @@ simple-salesforce = "~=1.12"
 
 [dev-packages]
 boto3 = "~=1.34"
-setuptools = "*"
-wheel = "*"
 twine = "*"
+build = "*"
 
 [requires]
 python_version = "3.11"

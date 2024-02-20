@@ -1,0 +1,16 @@
+[project]
+name = "simple-salesforce-extends"
+version = "0.2.0"
+authors = [{name="shinsaka", email="shinx1265@gmail.com"}]
+description="simple-salesforce extends library with AWS"
+readme = "README.md"
+requires-python = ">=3.11"
+classifiers=[
+    "Programming Language :: Python :: 3.11",
+    "License :: OSI Approved :: MIT License",
+]
+dependencies = [
+    "simple-salesforce~=1.12",
+]
+[project.urls]
+"Homepage" = "https://github.com/shinsaka/simple-salesforce-extends"
